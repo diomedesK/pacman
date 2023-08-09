@@ -5,7 +5,6 @@
 
 using sfk = sf::Keyboard;
 Pacman::Pacman(){
-	/* this->speed = settings::pacmanSpeed; */
 	this->setSpeed(settings::pacmanSpeed);
 
 	if(!this->texture.loadFromFile("./resources/textures/Pacman" + std::to_string(settings::cellSize) + ".png")){
@@ -57,9 +56,7 @@ bool Pacman::update(GameMap<settings::mapTileWidth, settings::mapTileHeight>& ga
 	return this->move(gamemap);
 };
 
-auto dbgcircle = sf::CircleShape(2, 30);
 bool Pacman::draw( sf::RenderWindow& targetwin ){
-	/* should fix it later; make things independent of each other */
 	static unsigned short counter = 0;
 
 	this->sprite.setTextureRect( 
@@ -72,16 +69,6 @@ bool Pacman::draw( sf::RenderWindow& targetwin ){
 
 	this->sprite.setPosition(this->position.x, this->position.y);
 	targetwin.draw(this->sprite);
-
-	dbgcircle.setFillColor(sf::Color(255, 0, 255));
-
-	Position facingPos = this->getFacingPosition();
-	dbgcircle.setPosition(facingPos.x, facingPos.y);
-	targetwin.draw(dbgcircle);
-
-	dbgcircle.setFillColor(sf::Color(255, 0, 0));
-	dbgcircle.setPosition(this->getCenteredPosition().x, getCenteredPosition().y);
-	targetwin.draw(dbgcircle);
 
 	counter = ++counter % ( this->getSpeed() * settings::pacmanAnimationFrames );
 	return true;

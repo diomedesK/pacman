@@ -158,12 +158,6 @@ bool Movable::move(GameMap<settings::mapTileWidth, settings::mapTileHeight>& gam
 
 	Position facingPos = this->getFacingPosition();
 
-	/*Checks if the movable position is outside the map, if so, send it to the other end, else, just move it*/
-	/* int facingtilex = (int)(facingPos.x / settings::scaledCell); */
-	/* int facingtiley = (int)(facingPos.y / settings::scaledCell); */
-
-	/* bool outsideMap = facingtilex < 0 || facingtiley < 0 || facingtilex >= settings::mapTileWidth || facingtiley >= settings::mapTileHeight; */
-
 	if(hunt::isPositionOutsideMap(facingPos)){
 		this->position += direction2move.at(this->direction);
 

@@ -98,30 +98,6 @@ class Game{
 
 		Sound soundManager;
 
-		/* std::array<std::string, settings::mapTileHeight> mapSketch = { */
-		/* 	" ################### ", */
-		/* 	" #........#........# ", */
-		/* 	" #o##.###.#.###.##o# ", */
-		/* 	" #.................# ", */
-		/* 	" #.##.#.#####.#.##.# ", */
-		/* 	" #....#...#...#....# ", */
-		/* 	" ####.### # ###.#### ", */
-		/* 	"    #.#   0   #.#    ", */
-		/* 	"#####.# ##=## #.#####", */
-		/* 	"     .  #123#  .     ", */
-		/* 	"#####.# ##### #.#####", */
-		/* 	"    #.#       #.#    ", */
-		/* 	" ####.# ##### #.#### ", */
-		/* 	" #........#........# ", */
-		/* 	" #.##.###.#.###.##.# ", */
-		/* 	" #o.#.....P.....#.o# ", */
-		/* 	" ##.#.#.#####.#.#.## ", */ 
-		/* 	" #....#...#...#....# ", */ 
-		/* 	" #.######.#.######.# ", */
-		/* 	" #.................# ", */
-		/* 	" ################### " */
-		/* }; */
-
 		std::array<std::string, settings::mapTileHeight> mapSketch = {
 			" ################### ",
 			" #........#........# ",
@@ -256,11 +232,7 @@ class Game{
 				} else if ( this->isGameWon ){
 					this->displayGameWonScreen();
 				} else {
-					SteadyTimePoint start = std::chrono::steady_clock::now();
 					this->updateGame();
-					SteadyTimePoint end = std::chrono::steady_clock::now();
-					unsigned execution_time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-					/* std::cout << "Game update took " << execution_time << " microseconds" << std::endl; */
 				};
 
 			};
@@ -386,6 +358,16 @@ class Game{
                 };
             };
 
+			/* draw grid */
+            for (int i = 0; i < settings::mapTileWidth; ++i) {
+                horizontalLine->setPosition(sf::Vector2f(0, i * settings::scaledCell));
+                window.draw(*horizontalLine);
+            }
+            for (int i = 0; i < settings::mapTileWidth; ++i) {
+                verticalLine->setPosition(sf::Vector2f(i * settings::scaledCell, 0));
+                window.draw(*verticalLine);
+            }
+
 			if( std::chrono::duration_cast<std::chrono::milliseconds>( currentTimePoint - lastGhostModeSwitchTimepoint ).count() > settings::ghostModeSwitchMilliseconds  ){
 				this->shouldGhostsScatter = !this->shouldGhostsScatter;
 				lastGhostModeSwitchTimepoint = currentTimePoint;
@@ -479,16 +461,6 @@ class Game{
 
 				pacmanSteppingCell = Cell::Empty;
 			}
-			
-			/* draw grid */
-            for (int i = 0; i < settings::mapTileWidth; ++i) {
-                horizontalLine->setPosition(sf::Vector2f(0, i * settings::scaledCell));
-                window.draw(*horizontalLine);
-            }
-            for (int i = 0; i < settings::mapTileWidth; ++i) {
-                verticalLine->setPosition(sf::Vector2f(i * settings::scaledCell, 0));
-                window.draw(*verticalLine);
-            }
 
             pacman.update(this->gameMap);
 			pacman.draw(this->window);

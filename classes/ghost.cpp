@@ -158,8 +158,6 @@ bool Ghost::update(GameMap<settings::mapTileWidth, settings::mapTileHeight>& gam
 };
 
 bool Ghost::draw( sf::RenderWindow& targetwin ){
-	auto dbgcircle = sf::CircleShape(2, 30);
-
 	static unsigned short count = 0;
 	static const std::map<Direction, short> direction2eye{
 		/*Direction to sprite mapping*/
@@ -203,10 +201,6 @@ bool Ghost::draw( sf::RenderWindow& targetwin ){
 		this->sprite.setTextureRect(sf::IntRect(direction2eye.at(this->direction) * csz, 1 * csz, csz, csz));
 	}
 	targetwin.draw(this->sprite);
-
-	Position facingPos = this->getFacingPosition();
-	dbgcircle.setPosition(facingPos.x, facingPos.y);
-	targetwin.draw(dbgcircle);
 
 	count = ++count % ( this->getSpeed() * settings::ghostAnimationFrames );
 	return true;
